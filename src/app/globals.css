@@ -1,0 +1,58 @@
+@import url("https://unpkg.com/leaflet/dist/leaflet.css");
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+.fc .fc-button {
+  padding: 1px 6px;
+}
+
+.fc .fc-button .fc-icon {
+  font-size: 12px;
+}
+
+.fc .fc-button-primary {
+  font-size: 14px;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 16px;
+}
+
+.fc-col-header-cell-cushion {
+  font-size: 12px;
+}
+
+.fc .fc-timegrid-axis-cushion,
+.fc .fc-timegrid-slot-label-cushion {
+  font-size: 12px;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.fc-daygrid-dot-event .fc-event-title {
+  font-size: 10px;
+}
