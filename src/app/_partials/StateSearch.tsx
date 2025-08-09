@@ -37,7 +37,7 @@ export const NIGERIA_STATES: StateItem[] = [
   { name: "Benue", lat: 7.1904, lng: 8.1299 },
   { name: "Borno", lat: 11.8333, lng: 13.15 },
   { name: "Cross River", lat: 5.9667, lng: 8.3333 },
-  { name: "Delta", lat: 5.511, lng: 6.7578 },
+  { name: "Delta", lat: 5.704, lng: 5.9339 },
   { name: "Ebonyi", lat: 6.2786, lng: 8.1113 },
   { name: "Edo", lat: 6.3388, lng: 5.6037 },
   { name: "Ekiti", lat: 7.6239, lng: 5.22 },

@@ -1,11 +1,13 @@
 "use client";
-import { useState } from "react";
+import { facilityData } from "@/types/clinicData";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 
 export function useGetClinicData() {
-  const [facilityData, setFacilityData] = useState({});
+  const [facilityData, setFacilityData] = useState<facilityData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  async function getSummary(state: string) {
+
+  const getSummary = useCallback(async function (state: string) {
     try {
       setIsLoading(true);
       const response = await fetch(`/api/clinics/summary?state=${state}`);
@@ -19,7 +21,7 @@ export function useGetClinicData() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   return { getSummary, isLoading, facilityData };
 }

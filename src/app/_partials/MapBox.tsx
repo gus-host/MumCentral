@@ -4,9 +4,9 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { roboto } from "./fontFamilies";
 import { MdLocationOn } from "react-icons/md";
-import { useGeolocation } from "react-use";
 import Spinner from "@/components/Spinner";
 import { Skeleton } from "@mui/material";
+import { useFacility } from "@/contexts/useFacilities";
 const Map = dynamic(() => import("./MapV1"), {
   ssr: false, // never server-render
 });
@@ -20,7 +20,7 @@ export default function MapBox({
   isLoading: boolean;
   geoState: string;
 }) {
-  const state = useGeolocation();
+  const { coords, loadingState } = useFacility();
 
   return (
     <div className="px-2 py-5">
@@ -30,14 +30,14 @@ export default function MapBox({
         </h2>
         <div className="flex gap-2 items-center">
           <MdLocationOn size={16} color="#3046a5" />
-          {isLoading ? (
+          {loadingState ? (
             <Skeleton height={20} width={100} />
           ) : (
             <p className="text-[14px] text-gray-600">{geoState}</p>
           )}
         </div>
       </div>
-      {state.loading ? (
+      {isLoading ? (
         <div className="h-[500px] w-full flex items-center justify-center">
           <Spinner size={20} strokeWidth={2} />
         </div>
@@ -45,8 +45,8 @@ export default function MapBox({
         <Map
           latLng={
             center || {
-              lat: state.latitude as number,
-              lng: state.longitude as number,
+              lat: coords?.lat as number,
+              lng: coords?.lng as number,
             }
           }
         />

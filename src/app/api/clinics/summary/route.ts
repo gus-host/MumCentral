@@ -47,7 +47,12 @@ const STATE_BOUNDS: Record<
   edo: { minLat: 5.0, maxLat: 6.7, minLng: 5.9, maxLng: 7.0 },
   ekiti: { minLat: 7.2, maxLat: 7.9, minLng: 4.5, maxLng: 5.2 },
   enugu: { minLat: 5.5, maxLat: 7.1, minLng: 6.5, maxLng: 7.9 },
-  fct: { minLat: 8.8, maxLat: 9.1, minLng: 7.15, maxLng: 7.5 }, // roughly FCT
+  "federal capital territory": {
+    minLat: 8.8,
+    maxLat: 9.1,
+    minLng: 7.15,
+    maxLng: 7.5,
+  }, // roughly FCT
   gombe: { minLat: 9.0, maxLat: 11.0, minLng: 9.0, maxLng: 11.0 },
   imo: { minLat: 5.3, maxLat: 6.3, minLng: 6.8, maxLng: 7.6 },
   jigawa: { minLat: 10.3, maxLat: 12.0, minLng: 8.4, maxLng: 10.3 },

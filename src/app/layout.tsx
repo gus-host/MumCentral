@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { Toaster } from "react-hot-toast";
 
 import Header from "./_partials/Header";
+import { FacilityProvider } from "@/contexts/useFacilities";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -42,7 +43,9 @@ export default function RootLayout({
           <Header />
 
           <div className="w-dvw overflow-y-auto">
-            <div className="max-w-[1200px] mx-auto px-4 py-5">{children}</div>
+            <div className="max-w-[1200px] mx-auto px-4 py-5">
+              <FacilityProvider>{children}</FacilityProvider>
+            </div>
           </div>
         </div>
       </body>

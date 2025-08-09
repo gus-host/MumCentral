@@ -36,7 +36,7 @@ function MapUpdater({
     } else {
       map.setView(target, zoom);
     }
-  }, [latLng?.lat, latLng?.lng, zoom, animate, map]);
+  }, [latLng, zoom, animate, map]);
 
   return null;
 }
