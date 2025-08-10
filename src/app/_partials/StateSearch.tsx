@@ -42,7 +42,7 @@ export const NIGERIA_STATES: StateItem[] = [
   { name: "Edo", lat: 6.3388, lng: 5.6037 },
   { name: "Ekiti", lat: 7.6239, lng: 5.22 },
   { name: "Enugu", lat: 6.45, lng: 7.5 },
-  { name: "FCT - Abuja", lat: 9.0765, lng: 7.3986 },
+  { name: "Federal Capital Territory", lat: 9.0765, lng: 7.3986 },
   { name: "Gombe", lat: 10.2897, lng: 11.1719 },
   { name: "Imo", lat: 5.4803, lng: 7.0258 },
   { name: "Jigawa", lat: 12.1542, lng: 10.8025 },

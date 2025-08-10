@@ -1,9 +1,17 @@
 "use client";
 
+import { NIGERIA_STATES } from "@/app/_partials/StateSearch";
 // auth-context.tsx
 import { useGetClinicData } from "@/services/getSummary";
 import { facilityData, latLng } from "@/types/clinicData";
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
 import toast from "react-hot-toast";
 import { useGeolocation } from "react-use";
 
@@ -35,11 +43,25 @@ export const FacilityProvider: React.FC<{ children: React.ReactNode }> = ({
   } = useGetClinicData();
   const loading = location.loading && !facilityData;
   const [loadingState, setLoadingState] = useState(false);
+  const hasGottenGeoLoc = useRef<boolean | null>(null);
+  const summaryGetter = useCallback(
+    async function summaryGetter(str: string) {
+      await getSummary(
+        str?.toLocaleLowerCase().replace("state", "").replaceAll("%20", " ")
+      );
+    },
+    [getSummary]
+  );
+
+  useEffect(() => {
+    if (!state) return;
+    summaryGetter(state);
+  }, [state, summaryGetter]);
+
   const getGeo = useCallback(
     async function getGeo(center: latLng) {
       try {
         if (location.loading && !center) return;
-
         console.log(location);
 
         const lat = center?.lat || location?.latitude;
@@ -49,37 +71,31 @@ export const FacilityProvider: React.FC<{ children: React.ReactNode }> = ({
 
         if (!lng || !lat) return;
 
-        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&accept-language=en`;
-        setLoadingState(true);
-        const res = await fetch(url, {
-          headers: {
-            // Nominatim policy expects an identifiable Referer / User-Agent for heavy usage.
-            Referer: window.location.origin,
-          },
-        });
-        if (!res.ok) throw new Error("Reverse geocode failed");
-        const data = await res.json(); // includes display_name and address object
-        console.log(data);
-        setState(
-          data?.address?.state ||
-            data?.address?.region ||
-            data?.address?.state_district
-        );
-        setLoadingState(false);
-        async function summaryGetter() {
-          const stateStr =
+        if (!center?.lat && !center?.lng && !hasGottenGeoLoc.current) {
+          const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&accept-language=en`;
+          setLoadingState(true);
+          const res = await fetch(url, {
+            headers: {
+              // Nominatim policy expects an identifiable Referer / User-Agent for heavy usage.
+              Referer: window.location.origin,
+            },
+          });
+          if (!res.ok) throw new Error("Reverse geocode failed");
+          const data = await res.json(); // includes display_name and address object
+          console.log(data);
+          setState(
             data?.address?.state ||
-            data?.address?.region ||
-            data?.address?.state_district;
-
-          await getSummary(
-            stateStr
-              .toLocaleLowerCase()
-              .replace("state", "")
-              .replaceAll("%20", " ")
+              data?.address?.region ||
+              data?.address?.state_district
           );
+          setLoadingState(false);
+        } else {
+          const state = NIGERIA_STATES.find(
+            (ns) => ns.lat === lat || ns.lng === lng
+          )?.name;
+          setState(state as string);
         }
-        summaryGetter();
+        hasGottenGeoLoc.current = true;
       } catch (err) {
         toast.error("failed to get you location, using default: Lagos state");
         setCoords({ lat: 6.5243793, lng: 3.3792057 });
@@ -89,7 +105,7 @@ export const FacilityProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoadingState(false);
       }
     },
-    [getSummary, location]
+    [location]
   );
 
   return (

@@ -10,3 +10,9 @@ export interface latLng {
 export interface facilityData {
   totals: { total_clinics: number; clinics_in_state_count: number };
 }
+
+// export interface OpenstreetData {
+//   state: string
+//   region: string
+//   data?.address?.state_district;
+// }
